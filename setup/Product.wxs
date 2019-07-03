@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
-  xmlns:util="http://wixtoolset.org/schemas/v4/wxs/util"
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+  xmlns:util="http://schemas.microsoft.com/wix/UtilExtension"
      >
 
   <?define ProductName = "Morphic" ?>
@@ -198,10 +198,11 @@
                               />
         </ServiceInstall>
 
-        <!-- Prevent language packs from being automatically removed -->
+        <!-- Prevent language packs from being automatically removed
         <RegistryKey Root="HKLM" Key="Software\Policies\Microsoft\Control Panel\International">
             <RegistryValue Type="integer" Name="BlockCleanupOfUnusedPreinstalledLangPacks" Value="1" KeyPath="yes"/>
         </RegistryKey>
+ -->
 
       </Component>
     </DirectoryRef>
@@ -221,18 +222,18 @@
                   ExeCommand='[INSTALLFOLDER]\windows\morphic-app.exe --shutdown'
                   Return="asyncWait"  />
 
-    <!-- Prevent the language packs from being automatically removed -->
+    <!-- Prevent the language packs from being automatically removed
     <CustomAction Id="DisableLPRemove"
                   ExeCommand ='schtasks /Change /TN "Microsoft\Windows\MUI\LPRemove" /Disable'
                   Directory="SystemFolder"
                   Execute="deferred"
                   Impersonate="no" Return="asyncWait" />
-
+    -->
     <InstallExecuteSequence>
       <Custom Action="ShutdownMorphic" Before="InstallValidate">Installed</Custom>
       <Custom Action="FirewallRemove" Before="InstallServices">REMOVE</Custom>
       <Custom Action="Firewall" Before="InstallServices">NOT Installed</Custom>
-      <Custom Action="DisableLPRemove" After="InstallInitialize" >NOT REMOVE</Custom>
+      <!-- <Custom Action="DisableLPRemove"  After="InstallInitialize" >NOT REMOVE</Custom> -->
     </InstallExecuteSequence>
 
     <!-- UI Configuration -->

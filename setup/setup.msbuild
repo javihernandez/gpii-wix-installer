@@ -84,11 +84,11 @@
 
   <Target Name="WIX">
     <Message Text="@(WixCode)"/>
-    <Exec Command='"$(WixPath)candle" -dpublishDir=$(TempDir) -dversion=$(Version) -dgotDocuMorph=$(GotDocuMorph) -dgotFilebeat=$(GotFilebeat) -dgotSharex=$(GotSharex) -o $(TempDir)\ @(WixCode, &apos; &apos;)'
+    <Exec Command='"$(WixPath)candle" -ext WixUtilExtension -dpublishDir=$(TempDir) -dversion=$(Version) -dgotDocuMorph=$(GotDocuMorph) -dgotFilebeat=$(GotFilebeat) -dgotSharex=$(GotSharex) -o $(TempDir)\ @(WixCode, &apos; &apos;)'
           ContinueOnError="false"
           WorkingDirectory="."
           />
-    <Exec Command='"$(WixPath)light" -ext WixUIExtension -out $(OutDir)\$(MsiFile) @(WixObject, &apos; &apos;)'
+    <Exec Command='"$(WixPath)light" -ext WixUIExtension -ext WixUtilExtension -out $(OutDir)\$(MsiFile) @(WixObject, &apos; &apos;)'
           ContinueOnError="false"
           WorkingDirectory="."
           />
